@@ -13,7 +13,5 @@ func main() {
 		log.Fatal(err)
 	}
 
-	if err := di.InitGRPC(); err != nil {
-		log.Fatal(err)
-	}
+	di.InitGRPC()
 }

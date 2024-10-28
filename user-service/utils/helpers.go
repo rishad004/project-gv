@@ -1,13 +1,16 @@
 package utils
 
 import (
-	"crypto/rand"
 	"crypto/subtle"
 	"encoding/base64"
 	"errors"
+	"math/rand"
+	"time"
 
 	"golang.org/x/crypto/argon2"
 )
+
+const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 
 func HashPassword(Password string) (string, string, error) {
 	salt := make([]byte, 16)
@@ -42,4 +45,13 @@ func VerifyPassword(Password, Hashed, Salted string) error {
 	}
 
 	return errors.New("wrong credentials!")
+}
+
+func StringKey() string {
+	seededRand := rand.New(rand.NewSource(time.Now().UnixNano()))
+	b := make([]byte, 18)
+	for i := range b {
+		b[i] = charset[seededRand.Intn(len(charset))]
+	}
+	return string(b)
 }
