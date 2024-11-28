@@ -22,12 +22,16 @@ func (h *ApiHanlder) LiveStream(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	username, er := utils.UserFromCookie(r, "uqsweerr")
+
 	utils.RenderTemplate(w, "live.html", map[string]any{
 		"Title":       res.Title,
 		"Description": res.Description,
 		"StreamerId":  res.Id,
 		"StreamKey":   res.Streamkey,
 		"Channel":     Channel,
+		"Username":    username,
+		"check":       er == nil,
 	})
 
 }
@@ -35,8 +39,7 @@ func (h *ApiHanlder) LiveStream(w http.ResponseWriter, r *http.Request) {
 func (h *ApiHanlder) StreamStart(w http.ResponseWriter, r *http.Request) {
 	log.Println("stream is starting...........")
 
-	vars := mux.Vars(r)
-	streamKey := vars["id"]
+	streamKey := r.FormValue("name")
 
 	if _, err := h.StreamerPb.StreamStart(context.Background(), &streamer_pb.StreamKeyResponse{Streamkey: streamKey}); err != nil {
 		utils.SendJSONResponse(w, err.Error(), http.StatusUnauthorized, r)
@@ -49,8 +52,7 @@ func (h *ApiHanlder) StreamStart(w http.ResponseWriter, r *http.Request) {
 func (h *ApiHanlder) StreamEnd(w http.ResponseWriter, r *http.Request) {
 	log.Println("stream is ending...........")
 
-	vars := mux.Vars(r)
-	streamKey := vars["id"]
+	streamKey := r.FormValue("name")
 
 	if _, err := h.StreamerPb.StreamEnd(context.Background(), &streamer_pb.StreamKeyResponse{Streamkey: streamKey}); err != nil {
 		utils.SendJSONResponse(w, err.Error(), http.StatusUnauthorized, r)

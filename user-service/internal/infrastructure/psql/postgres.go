@@ -18,7 +18,7 @@ func PsqlConn() (*gorm.DB, error) {
 		fmt.Println("Connect to Psql")
 	}
 
-	db.AutoMigrate(&domain.Users{}, domain.Subscribed{})
+	db.AutoMigrate(&domain.Users{}, domain.Subscribed{}, domain.Wallet{}, &domain.WalletTransactions{})
 
 	return db, nil
 }

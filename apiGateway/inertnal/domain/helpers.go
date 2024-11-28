@@ -9,6 +9,7 @@ type Response struct {
 
 type Claims struct {
 	UserID uint
+	Name   string
 	Role   string
 	jwt.StandardClaims
 }
@@ -17,4 +18,8 @@ type Razor struct {
 	Order     string `json:"OrderID"`
 	Payment   string `json:"PaymentID"`
 	Signature string `json:"Signature"`
+}
+
+type Message struct {
+	Amount int `json:"amount"`
 }

@@ -90,6 +90,7 @@ func (h *ApiHanlder) ProfileU(w http.ResponseWriter, r *http.Request) {
 	})
 	if err != nil {
 		utils.SendJSONResponse(w, err, http.StatusNotFound, r)
+		return
 	}
 	utils.SendJSONResponse(w, res, http.StatusOK, r)
 }

@@ -35,7 +35,12 @@ func (s *paymentSvc) PaymentVerifying(id int, Sig, Ord, Pay string) error {
 
 	if Type == "Subscription" {
 		log.Println(Type)
-		if _, err := s.UserSvc.Subscribed(context.Background(), &user_pb.SubscribedRequest{Id: int32(id)}); err != nil {
+		if _, err := s.UserSvc.Subscribed(context.Background(), &user_pb.SubscribedRequest{Id: int32(id), Paymentid: Ord}); err != nil {
+			return err
+		}
+	} else if Type == "Wallet" {
+		log.Println(Type)
+		if _, err := s.UserSvc.WalletAdded(context.Background(), &user_pb.SubscribedRequest{Id: int32(id), Paymentid: Ord}); err != nil {
 			return err
 		}
 	}

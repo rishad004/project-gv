@@ -29,9 +29,16 @@ func (s *userService) SignUp(user domain.Users) (string, error) {
 }
 
 func (s *userService) EmailVerification(key string) error {
-	if err := s.repo.EmailVerify(key); err != nil {
+	id, err := s.repo.EmailVerify(key)
+	
+	if err != nil {
 		return err
 	}
+
+	if err = s.repo.CreateWallet(id); err != nil {
+		return err
+	}
+
 	return nil
 }
 

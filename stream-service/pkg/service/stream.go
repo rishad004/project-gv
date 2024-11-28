@@ -7,30 +7,22 @@ import (
 	"github.com/rishad004/project-gv/stream-service/internal/domain"
 )
 
-type streamSvc struct {
-	repo        StreamRepo
-	streamerSvc streamer_pb.StreamerServiceClient
+
+func (s *streamSvc) StartStream(id int32) error {
+	if err := s.repo.StartStream(id); err != nil {
+		return err
+	}
+
+	return nil
 }
 
-func NewStreamService(svc StreamRepo, streamerSvc streamer_pb.StreamerServiceClient) StreamService {
-	return &streamSvc{repo: svc, streamerSvc: streamerSvc}
+func (s *streamSvc) EndStream(id int32) error {
+	if err := s.repo.EndStream(id); err != nil {
+		return err
+	}
+
+	return nil
 }
-
-// func (s *streamSvc) StartStream(id int32) error {
-// 	if err := s.repo.StartStream(id); err != nil {
-// 		return err
-// 	}
-
-// 	return nil
-// }
-
-// func (s *streamSvc) EndStream(id int32) error {
-// 	if err := s.repo.EndStream(id); err != nil {
-// 		return err
-// 	}
-
-// 	return nil
-// }
 
 func (s *streamSvc) StreamDetailing(userId int32, title, description string) error {
 	res, err := s.streamerSvc.ChannelView(context.Background(), &streamer_pb.Verification{
@@ -49,11 +41,11 @@ func (s *streamSvc) StreamDetailing(userId int32, title, description string) err
 	return nil
 }
 
-func (s *streamSvc) StreamDetails(streamerId int32) (domain.Stream, error) {
+func (s *streamSvc) StreamDetails(streamerId int32) (domain.StreamData, error) {
 	stream, err := s.repo.StreamDetails(streamerId)
 
 	if err != nil {
-		return domain.Stream{}, err
+		return domain.StreamData{}, err
 	}
 
 	return stream, nil

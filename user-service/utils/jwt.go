@@ -8,9 +8,10 @@ import (
 	"github.com/spf13/viper"
 )
 
-func JwtCreate(userId int, Role string) (string, error) {
+func JwtCreate(userId int, Username string, Role string) (string, error) {
 	claims := domain.Claims{
 		UserID: uint(userId),
+		Name:   Username,
 		Role:   Role,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(time.Hour * 48).Unix(),

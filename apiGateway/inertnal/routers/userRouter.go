@@ -12,6 +12,8 @@ func UserMiddle(user *handler.ApiHanlder, r *mux.Router) {
 	r.HandleFunc("/subscribe", user.Subscribing).Methods("POST")
 	r.HandleFunc("/streamer/list", user.SubscriptionList).Methods("GET")
 	r.HandleFunc("/streamer/follow", user.Following).Methods("POST")
+	r.HandleFunc("/wallet/add", user.WalletAdd).Methods("POST")
+	r.HandleFunc("/wallet", user.WalletShow).Methods("GET")
 }
 
 func UserRouter(user *handler.ApiHanlder, r *mux.Router) {

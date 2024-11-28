@@ -1,0 +1,26 @@
+{"level":"info","msg":"AdminDashboard: Starting admin dashboard.....","time":"2024-11-22T10:36:52+05:30"}
+{"email":"rishad@gmail.com","error":"rpc error: code = Unavailable desc = connection error: desc = \"transport: Error while dialing: dial tcp 127.0.0.1:8084: connect: connection refused\"","function":"AdminDashboard","level":"error","msg":"AdminDashboard: gRPC error on admin dashboard finding stream count","time":"2024-11-22T10:36:52+05:30"}
+{"level":"info","msg":"AdminLogin: Starting login process.....","time":"2024-11-22T10:38:33+05:30"}
+{"email":"superadmin@gmail.com","function":"LoginAdmin","level":"info","msg":"LoginAdmin: admin login successfull","time":"2024-11-22T10:38:33+05:30"}
+{"level":"info","msg":"AdminLogin: Starting login process.....","time":"2024-11-22T10:38:43+05:30"}
+{"email":"rishad@gmail.com","function":"LoginAdmin","level":"info","msg":"LoginAdmin: admin login successfull","time":"2024-11-22T10:38:43+05:30"}
+{"level":"info","msg":"AddAdmin: Starting adding admin process.....","time":"2024-11-22T10:38:46+05:30"}
+{"error":"not a super admin only super admin can add admin","function":"AddAdmin","level":"error","msg":"AddAdmin: not a super admin","time":"2024-11-22T10:38:46+05:30"}
+{"level":"info","msg":"AdminDashboard: Starting admin dashboard.....","time":"2024-11-22T11:45:15+05:30"}
+{"email":"rishad@gmail.com","function":"AdminDashboard","level":"info","msg":"AdminDashboard: admin dashboard proccess completed successfully","time":"2024-11-22T11:45:15+05:30"}
+{"level":"info","msg":"AdminDashboard: Starting admin dashboard.....","time":"2024-11-22T11:45:32+05:30"}
+{"email":"rishad@gmail.com","function":"AdminDashboard","level":"info","msg":"AdminDashboard: admin dashboard proccess completed successfully","time":"2024-11-22T11:45:32+05:30"}
+{"level":"info","msg":"AdminDashboard: Starting admin dashboard.....","time":"2024-11-22T11:46:01+05:30"}
+{"email":"rishad@gmail.com","function":"AdminDashboard","level":"info","msg":"AdminDashboard: admin dashboard proccess completed successfully","time":"2024-11-22T11:46:01+05:30"}
+{"level":"info","msg":"AdminDashboard: Starting admin dashboard.....","time":"2024-11-22T11:47:48+05:30"}
+{"email":"rishad@gmail.com","function":"AdminDashboard","level":"info","msg":"AdminDashboard: admin dashboard proccess completed successfully","time":"2024-11-22T11:47:48+05:30"}
+{"level":"info","msg":"AdminDashboard: Starting admin dashboard.....","time":"2024-11-22T11:50:11+05:30"}
+{"email":"rishad@gmail.com","function":"AdminDashboard","level":"info","msg":"AdminDashboard: admin dashboard proccess completed successfully","time":"2024-11-22T11:50:11+05:30"}
+{"level":"info","msg":"AdminDashboard: Starting admin dashboard.....","time":"2024-11-22T11:50:41+05:30"}
+{"email":"rishad@gmail.com","function":"AdminDashboard","level":"info","msg":"AdminDashboard: admin dashboard proccess completed successfully","time":"2024-11-22T11:50:41+05:30"}
+{"level":"info","msg":"AdminDashboard: Starting admin dashboard.....","time":"2024-11-22T11:51:07+05:30"}
+{"email":"rishad@gmail.com","function":"AdminDashboard","level":"info","msg":"AdminDashboard: admin dashboard proccess completed successfully","time":"2024-11-22T11:51:07+05:30"}
+{"level":"info","msg":"AdminDashboard: Starting admin dashboard.....","time":"2024-11-22T11:51:24+05:30"}
+{"email":"rishad@gmail.com","function":"AdminDashboard","level":"info","msg":"AdminDashboard: admin dashboard proccess completed successfully","time":"2024-11-22T11:51:24+05:30"}
+{"level":"info","msg":"AdminDashboard: Starting admin dashboard.....","time":"2024-11-22T14:43:05+05:30"}
+{"email":"rishad@gmail.com","function":"AdminDashboard","level":"info","msg":"AdminDashboard: admin dashboard proccess completed successfully","time":"2024-11-22T14:43:05+05:30"}

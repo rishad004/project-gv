@@ -4,9 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Live Stream - {{.Channel}}</title>
-  
   <style>
-    /* Existing styles here */
+    /* Existing styles */
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -155,8 +154,9 @@
     .control-button.subscribe:hover {
       background-color: #ff3333;
     }
+
     /* Popup Styles */
-    #popup {
+    #popup, #amount-selection {
       display: none;
       position: fixed;
       top: 50%;
@@ -174,7 +174,7 @@
       overflow-y: auto;
     }
 
-    #popup button {
+    #popup button, #amount-selection button {
       background-color: #222;
       color: #fff;
       border: none;
@@ -184,8 +184,67 @@
       border-radius: 5px;
     }
 
-    #popup button:hover {
+    #popup button:hover, #amount-selection button:hover {
       background-color: #333;
+    }
+
+    /* Superchat Amount Selection Modal */
+    #amount-selection {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #1a1a1a;
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      z-index: 1000;
+      max-width: 90%;
+      max-height: 80%;
+      overflow-y: auto;
+    }
+    
+    #amount-selection h3 {
+      font-size: 1.5em;
+      margin-bottom: 15px;
+      color: #00ff88;
+    }
+    
+    #superchat-amount {
+      width: 100%;
+      font-size: 1.2em;
+      padding: 12px;
+      background-color: #222;
+      color: #00ff88;
+      border: 2px solid #00ff88;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      appearance: none; /* Remove default dropdown arrow for styling */
+      outline: none;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    #superchat-amount:hover {
+      background-color: #333;
+    }
+    
+    #amount-selection button {
+      background-color: #00ff88;
+      color: black;
+      border: none;
+      padding: 12px 20px;
+      cursor: pointer;
+      font-size: 1.2em;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+    }
+    
+    #amount-selection button:hover {
+      background-color: #009955;
     }
 
   </style>
@@ -198,8 +257,6 @@
     <div id="video-container">
       <video id="video" controls autoplay></video>
     </div>
-
-    <!-- Follow and Subscribe Buttons -->
     <div id="controls">
       <button class="control-button follow" onclick="followStreamer()">Follow</button>
       <button class="control-button subscribe" onclick="subscribeStreamer()">Subscribe</button>
@@ -211,21 +268,32 @@
   <!-- Chat Box on the Right -->
   <div id="chat-container">
     <h1>Live Chat</h1>
-    <div id="chat-box">
-      <!-- Example chat messages -->
-      <div class="chat-message">User1: Hello everyone!</div>
-      <div class="chat-message superchat">User2 (Superchat): Loving the stream!</div>
+    <div id="chat-box" id="chat-messages">
+      <!-- Chat messages will appear here -->
     </div>
 
     <!-- Chat input box -->
     <div class="chat-input">
-      <textarea placeholder="Type your message..."></textarea>
+      <textarea id="chat-message" placeholder="Type your message..."></textarea>
       <div class="chat-buttons">
-        <button type="button">Send</button>
-        <button type="button">Superchat</button>
-        <button type="button">Send Sticker</button>
+        <button type="button" onclick="sendMessage()">Send</button>
+        <button type="button" onclick="showAmountSelection()">Superchat</button>
       </div>
     </div>
+  </div>
+
+  <!-- Superchat Amount Selection Modal -->
+  <div id="amount-selection">
+    <h3>Select Superchat Amount</h3>
+    <select id="superchat-amount">
+      <option value="5">5</option>
+      <option value="10">10</option>
+      <option value="20">20</option>
+      <option value="50">50</option>
+      <option value="100">100</option>
+    </select>
+    <button onclick="sendSuperchat()">Confirm</button>
+    <button onclick="closeAmountSelection()">Close</button>
   </div>
 
   <!-- Popup for subscription response -->
@@ -236,6 +304,12 @@
 
   <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
   <script>
+
+    function closeAmountSelection() {
+      document.getElementById('amount-selection').style.display = 'none';
+    }
+
+    // HLS streaming setup
     if (Hls.isSupported()) {
       var video = document.getElementById('video');
       var hls = new Hls();
@@ -251,7 +325,70 @@
       });
     }
 
-    // Function to follow the streamer
+    // WebSocket connection for chat
+    const socket = new WebSocket('ws://localhost:8080/ws/user/chat?channel={{.Channel}}');
+
+    socket.onopen = function() {
+      console.log('Connected to the chat WebSocket');
+    };
+
+    socket.onmessage = function(event) {
+      const message = JSON.parse(event.data);
+      displayMessage(message.user, message.text, message.type, message.amount);
+    };
+
+    socket.onclose = function() {
+      console.log('Chat WebSocket closed');
+    };
+
+    function sendMessage() {
+      const isUserLoggedIn = '{{.check}}';
+      if (isUserLoggedIn == 'false') {
+        showPopup('Please Login!!');
+      } else {
+        const text = document.getElementById('chat-message').value;
+        if (text) {
+          const message = JSON.stringify({user: '{{.Username}}', type: 'message', text: text });
+          socket.send(message);
+          document.getElementById('chat-message').value = '';
+        }
+      }
+    }
+
+    function showAmountSelection() {
+      document.getElementById('amount-selection').style.display = 'block';
+    }
+
+    function sendSuperchat() {
+      const isUserLoggedIn = '{{.check}}';
+      if (isUserLoggedIn == 'false') {
+        showPopup('Please Login!!');
+      } else {
+        const text = document.getElementById('chat-message').value;
+        const amount = document.getElementById('superchat-amount').value;
+        if (text) {
+          const message = JSON.stringify({ user: '{{.Username}}', type: 'superchat', text: text, amount: amount });
+          socket.send(message);
+          document.getElementById('chat-message').value = '';
+          document.getElementById('amount-selection').style.display = 'none';
+        }
+      }
+    }
+
+    function displayMessage(user, text, type = 'message', amount) {
+      const chatBox = document.getElementById('chat-box');
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('chat-message');
+      if (type === 'superchat') {
+      messageDiv.classList.add('superchat');
+      messageDiv.innerHTML = `<strong>${user}:</strong> ${text} <strong style="color: red;"> $${amount} </strong>`;
+    } else {
+      messageDiv.innerHTML = `<strong>${user}:</strong> ${text}`;
+    }
+      chatBox.appendChild(messageDiv);
+      chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
     function followStreamer() {
       fetch('http://localhost:8080/streamer/follow?id={{.StreamerId}}', {
         method: 'POST'
@@ -259,7 +396,7 @@
       .then(response => {
         if (!response.ok) {
           throw new Error('Failed to follow');
-        }else{
+        } else {
           showPopup('Followed successfully.');
         }
       })
@@ -269,41 +406,32 @@
       });
     }
 
-    // Function to subscribe the streamer
     function subscribeStreamer() {
-  // First, make the POST request to generate the payment ID
-  fetch('http://localhost:8080/subscribe?id={{.StreamerId}}', {
-    method: 'POST'
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Failed to subscribe');
+      fetch('http://localhost:8080/subscribe?id={{.StreamerId}}', {
+        method: 'POST'
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to subscribe');
+        }
+        return response.json();
+      })
+      .then(data => {
+        const paymentId = data.message.paymentid;
+        const url = `http://localhost:8080/payment/page?id=${paymentId}`;
+        window.open(url, '_blank');
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        showPopup('Failed to subscribe. Please try again.');
+      });
     }
-    return response.json(); // Parse response as JSON
-  })
-  .then(data => {
-    // Extract payment ID from the response
-    const paymentId = data.message.paymentid;
 
-    // Open the GET request in a new tab with the payment ID
-    const url = `http://localhost:8080/payment/page?id=${paymentId}`;
-    window.open(url, '_blank');
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    alert('Failed to subscribe. Please try again.');
-  });
-}
-
-
-
-    // Function to show the popup with content
     function showPopup(content) {
       document.getElementById('popup-content').innerHTML = content;
       document.getElementById('popup').style.display = 'block';
     }
 
-    // Function to close the popup
     function closePopup() {
       document.getElementById('popup').style.display = 'none';
     }

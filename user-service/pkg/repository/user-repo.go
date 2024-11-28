@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/IBM/sarama"
 	"github.com/go-redis/redis"
 	"github.com/rishad004/project-gv/user-service/internal/domain"
 	"github.com/rishad004/project-gv/user-service/utils"
@@ -14,10 +15,11 @@ import (
 type userRepo struct {
 	Db  *gorm.DB
 	Rdb *redis.Client
+	Kfk sarama.SyncProducer
 }
 
-func NewUserRepo(DB *gorm.DB, RDB *redis.Client) UserRepo {
-	return &userRepo{Db: DB, Rdb: RDB}
+func NewUserRepo(DB *gorm.DB, RDB *redis.Client, kfk sarama.SyncProducer) UserRepo {
+	return &userRepo{Db: DB, Rdb: RDB, Kfk: kfk}
 }
 
 func (r *userRepo) CreateUser(user domain.Users) (string, error) {
@@ -38,25 +40,25 @@ func (r *userRepo) CreateUser(user domain.Users) (string, error) {
 	return "localhost:8080/verify?code=" + key, nil
 }
 
-func (r *userRepo) EmailVerify(key string) error {
+func (r *userRepo) EmailVerify(key string) (int, error) {
 
 	var user domain.Users
 
 	id, err := r.Rdb.Get(key).Result()
 	if err != nil {
-		return err
+		return 0, err
 	}
 
 	if er := r.Db.First(&user, id).Error; er != nil {
-		return er
+		return 0, er
 	}
 
 	user.Verified = true
 	if er := r.Db.Save(&user).Error; er != nil {
-		return er
+		return 0, er
 	}
 
-	return nil
+	return int(user.ID), nil
 }
 
 func (r *userRepo) Login(Username, Password string) (string, error) {
@@ -71,10 +73,10 @@ func (r *userRepo) Login(Username, Password string) (string, error) {
 	}
 
 	if !user.Verified {
-		return "", errors.New("Email not verified. Please check your mail!")
+		return "", errors.New("email not verified. please check your mail")
 	}
 
-	token, err := utils.JwtCreate(int(user.ID), "user")
+	token, err := utils.JwtCreate(int(user.ID), Username, "user")
 	if err != nil {
 		return "", err
 	}

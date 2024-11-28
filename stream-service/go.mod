@@ -3,7 +3,7 @@ module github.com/rishad004/project-gv/stream-service
 go 1.23.2
 
 require (
-	github.com/rishad004/Gv_protofiles v0.2.23
+	github.com/rishad004/Gv_protofiles v0.3.5
 	github.com/spf13/viper v1.19.0
 	gorm.io/gorm v1.25.12
 )

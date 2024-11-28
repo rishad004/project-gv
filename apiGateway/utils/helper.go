@@ -2,13 +2,18 @@ package utils
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"text/template"
 
+	"github.com/dgrijalva/jwt-go"
 	"github.com/rishad004/project-gv/apiGateway/inertnal/domain"
+	"github.com/spf13/viper"
 )
+
+type H map[string]any
 
 func SendJSONResponse(w http.ResponseWriter, message any, statusCode int, r *http.Request) {
 
@@ -61,4 +66,26 @@ func SetCors(w http.ResponseWriter) {
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+}
+
+func UserFromCookie(r *http.Request, key string) (string, error) {
+	cookie, err := r.Cookie(key)
+	if err != nil {
+		return "", errors.New("no token error")
+	}
+
+	if cookie.Value == "" {
+		return "", errors.New("no Token found")
+	}
+
+	claims := &domain.Claims{}
+	token, _ := jwt.ParseWithClaims(cookie.Value, claims, func(token *jwt.Token) (interface{}, error) {
+		return []byte(viper.GetString("SECRET_KEY")), nil
+	})
+
+	if !token.Valid {
+		return "", errors.New("invalid Token")
+	}
+
+	return claims.Name, nil
 }

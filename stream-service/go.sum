@@ -45,6 +45,8 @@ github.com/rishad004/Gv_protofiles v0.2.22 h1:NsDPxD/znbl9oPT65HGh4W5eQZpL110Vfr
 github.com/rishad004/Gv_protofiles v0.2.22/go.mod h1:samB2G/mVMkug3aHVvAxLIwRfBvNb8qEnFnfvGozAHI=
 github.com/rishad004/Gv_protofiles v0.2.23 h1:gw4pRwYkw6MkPqAAidQ4my7an8eeYYfBWX744rr/O6A=
 github.com/rishad004/Gv_protofiles v0.2.23/go.mod h1:samB2G/mVMkug3aHVvAxLIwRfBvNb8qEnFnfvGozAHI=
+github.com/rishad004/Gv_protofiles v0.3.5 h1:qAUKqCY3wo8hqRwqD96atiqAyRj5dME6z8DK/M6PuXw=
+github.com/rishad004/Gv_protofiles v0.3.5/go.mod h1:samB2G/mVMkug3aHVvAxLIwRfBvNb8qEnFnfvGozAHI=
 github.com/rogpeppe/go-internal v1.9.0 h1:73kH8U+JUqXU8lRuOHeVHaa/SZPifC7BkcraZVejAe8=
 github.com/rogpeppe/go-internal v1.9.0/go.mod h1:WtVeX8xhTBvf0smdhujwtBcq4Qrzq/fJaraNFVN+nFs=
 github.com/sagikazarmark/locafero v0.4.0 h1:HApY1R9zGo4DBgr7dqsTH/JJxLTTsOt7u6keLGt6kNQ=

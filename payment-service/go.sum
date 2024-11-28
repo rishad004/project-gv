@@ -35,6 +35,8 @@ github.com/rishad004/Gv_protofiles v0.1.65 h1:R3p/Tq8y33HS/ym/+dNHj1k+8LsR+ctAJx
 github.com/rishad004/Gv_protofiles v0.1.65/go.mod h1:samB2G/mVMkug3aHVvAxLIwRfBvNb8qEnFnfvGozAHI=
 github.com/rishad004/Gv_protofiles v0.1.66 h1:3Iq+gNb25+5REtbz1+tvcGOvUoIUiTG8uLtBacseWrs=
 github.com/rishad004/Gv_protofiles v0.1.66/go.mod h1:samB2G/mVMkug3aHVvAxLIwRfBvNb8qEnFnfvGozAHI=
+github.com/rishad004/Gv_protofiles v0.3.2 h1:X5ERxpgzwgUG9fL9sPlLfaUXGbnpIj5vD/HytPbZiV0=
+github.com/rishad004/Gv_protofiles v0.3.2/go.mod h1:samB2G/mVMkug3aHVvAxLIwRfBvNb8qEnFnfvGozAHI=
 github.com/sagikazarmark/locafero v0.4.0 h1:HApY1R9zGo4DBgr7dqsTH/JJxLTTsOt7u6keLGt6kNQ=
 github.com/sagikazarmark/locafero v0.4.0/go.mod h1:Pe1W6UlPYUk/+wc/6KFhbORCfqzgYEpgQ3O5fPuL3H4=
 github.com/sagikazarmark/slog-shim v0.1.0 h1:diDBnUNK9N/354PgrxMywXnAwEr1QZcOr6gto+ugjYE=

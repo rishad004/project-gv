@@ -3,14 +3,17 @@ package repository
 import (
 	"errors"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/rishad004/project-gv/user-service/internal/domain"
 )
 
-func (r *userRepo) Subscribing(paymentId string, sid int) error {
+func (r *userRepo) Subscribing(paymentId string, sid, amount int) error {
+	Sid := strconv.Itoa(sid)
+	Amount := strconv.Itoa(amount)
 
-	r.Rdb.Set(paymentId, sid, 24*time.Hour)
+	r.Rdb.Set(paymentId, Sid+","+Amount, 24*time.Hour)
 	return nil
 }
 
@@ -26,16 +29,20 @@ func (r *userRepo) SubscriptionCheck(userid int, id int) error {
 			return nil
 		}
 	}
-	return errors.New("no subscription exist!")
+	return errors.New("no subscription exist")
 }
 
 func (r *userRepo) Subscribed(userid int, PaymentId string) error {
+	var user domain.Users
+
 	id, err := r.Rdb.Get(PaymentId).Result()
 	if err != nil {
 		return err
 	}
 
-	Id, er := strconv.Atoi(id)
+	s := strings.Split(id, ",")
+
+	Id, er := strconv.Atoi(s[0])
 	if er != nil {
 		return er
 	}
@@ -48,6 +55,12 @@ func (r *userRepo) Subscribed(userid int, PaymentId string) error {
 	}).Error; errr != nil {
 		return errr
 	}
+
+	if err = r.Db.First(&user, userid).Error; err != nil {
+		return err
+	}
+
+	r.PushCommentToQueue("Subscription", domain.Kafka{Message: user.Email + "," + s[1]})
 
 	return nil
 }

@@ -4,7 +4,9 @@ go 1.23.1
 
 require (
 	github.com/gorilla/mux v1.8.1
-	github.com/rishad004/Gv_protofiles v0.3.1
+	github.com/gorilla/websocket v1.5.3
+	github.com/rishad004/Gv_protofiles v0.3.6
+	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 )
 
 require (
@@ -30,10 +32,11 @@ require (
 
 require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/viper v1.19.0
-	golang.org/x/net v0.29.0 // indirect
-	golang.org/x/sys v0.25.0 // indirect
-	golang.org/x/text v0.18.0 // indirect
+	golang.org/x/net v0.30.0 // indirect
+	golang.org/x/sys v0.26.0 // indirect
+	golang.org/x/text v0.19.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240903143218-8af14fe29dc1 // indirect
 	google.golang.org/grpc v1.66.2
 	google.golang.org/protobuf v1.34.2 // indirect

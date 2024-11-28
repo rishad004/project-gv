@@ -16,7 +16,7 @@ func (s *userService) Subscribing(userid int, id int) (string, error) {
 	}
 
 	if err := s.repo.SubscriptionCheck(userid, int(ress.Sid)); err == nil {
-		return "", errors.New("subscription already exists!")
+		return "", errors.New("subscription already exists")
 	}
 
 	resp, errp := s.Payment_Pb.PaymentInitialize(context.Background(), &payment_pb.PaymentInitRequest{Amount: ress.Amount, Type: "Subscription"})
@@ -25,7 +25,7 @@ func (s *userService) Subscribing(userid int, id int) (string, error) {
 		return "", errp
 	}
 
-	if err := s.repo.Subscribing(resp.Paymentid, int(ress.Sid)); err != nil {
+	if err := s.repo.Subscribing(resp.Paymentid, int(ress.Sid), int(ress.Amount)); err != nil {
 		return "", err
 	}
 

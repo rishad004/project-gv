@@ -21,11 +21,13 @@ func InitGRPC() {
 
 	connStreamer, streamerSvc := InitStreamer()
 	connPayment, paymentSvc := InitPayment()
+	connKafka := InitKafka()
 
 	defer connStreamer.Close()
 	defer connPayment.Close()
+	defer connKafka.Close()
 
-	repo := repository.NewUserRepo(db, rdb)
+	repo := repository.NewUserRepo(db, rdb, connKafka)
 	svc := service.NewUserService(repo, streamerSvc, paymentSvc)
 	handler := delivery.NewUserHandler(svc)
 

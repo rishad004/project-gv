@@ -21,6 +21,7 @@ type Users struct {
 
 type Claims struct {
 	UserID uint
+	Name   string
 	Role   string
 	jwt.StandardClaims
 }
@@ -31,4 +32,21 @@ type Subscribed struct {
 	SubscriptionId int
 	Expiry         time.Time
 	PaymentId      string
+}
+
+type Wallet struct {
+	gorm.Model
+	Amount int
+	UserId int
+}
+
+type Kafka struct {
+	Message string `json:"message"`
+}
+
+type WalletTransactions struct {
+	gorm.Model
+	WalletId int
+	Amount   int
+	Type     string
 }

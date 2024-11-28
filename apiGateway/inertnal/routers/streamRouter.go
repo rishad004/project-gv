@@ -6,8 +6,8 @@ import (
 )
 
 func StreamRouter(handle *handler.ApiHanlder, r *mux.Router) {
-	r.HandleFunc("/live/start/{id}", handle.StreamStart).Methods("POST")
-	r.HandleFunc("/live/end/{id}", handle.StreamEnd).Methods("POST")
+	r.HandleFunc("/live/start", handle.StreamStart).Methods("POST")
+	r.HandleFunc("/live/end", handle.StreamEnd).Methods("POST")
 	r.HandleFunc("/live/{id}", handle.LiveStream).Methods("GET")
 }
 
