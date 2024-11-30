@@ -13,7 +13,7 @@ import (
 
 func InitAdmin() (*grpc.ClientConn, admin_pb.AdminServiceClient) {
 
-	connAdmin, err := grpc.Dial("localhost:8085", grpc.WithInsecure())
+	connAdmin, err := grpc.Dial("admin-service:8085", grpc.WithInsecure())
 	if err != nil {
 		log.Fatal("Failed to connect to admin service:", err)
 	}

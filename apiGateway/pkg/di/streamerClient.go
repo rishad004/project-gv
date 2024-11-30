@@ -13,7 +13,7 @@ import (
 
 func InitStreamer() (*grpc.ClientConn, streamer_pb.StreamerServiceClient) {
 
-	connStreamer, err := grpc.Dial("localhost:8082", grpc.WithInsecure())
+	connStreamer, err := grpc.Dial("streamer-service:8082", grpc.WithInsecure())
 	if err != nil {
 		log.Fatal("Failed to connect to user service:", err)
 	}

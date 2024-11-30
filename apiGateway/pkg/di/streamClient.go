@@ -13,7 +13,7 @@ import (
 
 func InitStream() (*grpc.ClientConn, stream_pb.StreamServiceClient) {
 
-	connStream, err := grpc.Dial("localhost:8084", grpc.WithInsecure())
+	connStream, err := grpc.Dial("stream-service:8084", grpc.WithInsecure())
 	if err != nil {
 		log.Fatal("Failed to connect to user service:", err)
 	}

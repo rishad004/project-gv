@@ -313,13 +313,13 @@
     if (Hls.isSupported()) {
       var video = document.getElementById('video');
       var hls = new Hls();
-      hls.loadSource('http://localhost:8888/hls/{{.StreamKey}}.m3u8');
+      hls.loadSource('http:///35.200.223.115:8888/hls/{{.StreamKey}}.m3u8');
       hls.attachMedia(video);
       hls.on(Hls.Events.MANIFEST_PARSED, function() {
         video.play();
       });
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      video.src = 'http://localhost:8888/hls/{{.StreamKey}}.m3u8';
+      video.src = 'http:///35.200.223.115:8888/hls/{{.StreamKey}}.m3u8';
       video.addEventListener('loadedmetadata', function() {
         video.play();
       });

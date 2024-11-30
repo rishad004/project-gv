@@ -75,7 +75,6 @@ func (h *ApiHanlder) LoginUser(w http.ResponseWriter, r *http.Request) {
 		Value:    res.Token,
 		Expires:  time.Now().Add(48 * time.Hour),
 		HttpOnly: true,
-		Secure:   true,
 		Path:     "/",
 	}
 	http.SetCookie(w, &cookie)

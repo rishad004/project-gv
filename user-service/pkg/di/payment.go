@@ -8,7 +8,7 @@ import (
 )
 
 func InitPayment() (*grpc.ClientConn, payment_pb.PaymentServiceClient) {
-	connPayment, err := grpc.Dial("localhost:8083", grpc.WithInsecure())
+	connPayment, err := grpc.Dial("payment-service:8083", grpc.WithInsecure())
 	if err != nil {
 		log.Fatal("Failed to connect to user service:", err)
 	}

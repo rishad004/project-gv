@@ -8,7 +8,7 @@ import (
 )
 
 func InitUser() (*grpc.ClientConn, user_pb.UserServiceClient) {
-	connUser, err := grpc.Dial("localhost:8081", grpc.WithInsecure())
+	connUser, err := grpc.Dial("user-service:8081", grpc.WithInsecure())
 	if err != nil {
 		log.Fatal("Failed to connect to user service:", err)
 	}

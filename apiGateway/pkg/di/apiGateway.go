@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/rishad004/project-gv/apiGateway/inertnal/handler"
 	"github.com/spf13/viper"
 )
@@ -21,6 +22,9 @@ func ClientConnect() {
 	connLog := InitLogger()
 
 	handle := handler.ClientConnect(userSvc, streamerSvc, paymentSvc, streamSvc, adminSvc, ws, connLog)
+
+	// router for Prometheus
+	r.Handle("/metrix", promhttp.Handler())
 
 	StreamerRouting(r, handle)
 	UserRouting(r, handle)
