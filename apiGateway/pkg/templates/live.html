@@ -326,7 +326,7 @@
     }
 
     // WebSocket connection for chat
-    const socket = new WebSocket('ws://localhost:8080/ws/user/chat?channel={{.Channel}}');
+    const socket = new WebSocket('ws://34.171.224.184:8080/ws/user/chat?channel={{.Channel}}');
 
     socket.onopen = function() {
       console.log('Connected to the chat WebSocket');
@@ -390,7 +390,7 @@
     }
 
     function followStreamer() {
-      fetch('http://localhost:8080/streamer/follow?id={{.StreamerId}}', {
+      fetch('https://byecom.shop/streamer/follow?id={{.StreamerId}}', {
         method: 'POST'
       })
       .then(response => {
@@ -407,7 +407,7 @@
     }
 
     function subscribeStreamer() {
-      fetch('http://localhost:8080/subscribe?id={{.StreamerId}}', {
+      fetch('https://byecom.shop/subscribe?id={{.StreamerId}}', {
         method: 'POST'
       })
       .then(response => {
@@ -418,7 +418,7 @@
       })
       .then(data => {
         const paymentId = data.message.paymentid;
-        const url = `http://localhost:8080/payment/page?id=${paymentId}`;
+        const url = `https://byecom.shop/payment/page?id=${paymentId}`;
         window.open(url, '_blank');
       })
       .catch(error => {

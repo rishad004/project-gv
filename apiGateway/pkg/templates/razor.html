@@ -48,7 +48,7 @@ rzp1.on('payment.failed', function (response){
         alert(response.error.metadata.payment_id);
 });
 function SendGin(payment,order,signature){
-fetch("http://localhost:8080/payment/verify", {
+fetch("https://byecom.shop/payment/verify", {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
