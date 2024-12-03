@@ -37,7 +37,7 @@ func (r *userRepo) CreateUser(user domain.Users) (string, error) {
 	key := utils.StringKey()
 	r.Rdb.Set(key, user.ID, 24*time.Hour)
 
-	return "localhost:8080/verify?code=" + key, nil
+	return "https://byecom.shop/verify?code=" + key, nil
 }
 
 func (r *userRepo) EmailVerify(key string) (int, error) {

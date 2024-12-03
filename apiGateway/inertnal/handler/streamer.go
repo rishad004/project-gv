@@ -47,7 +47,7 @@ func (h *ApiHanlder) ChannelView(w http.ResponseWriter, r *http.Request) {
 	resp := map[string]any{
 		"Channel":     res.Name,
 		"Description": res.Description,
-		"RTMP-url":    "rtmp://localhost:1935/live",
+		"RTMP-url":    "rtmp://34.72.47.88:1935/live",
 		"StreamKey":   res.Streamkey,
 	}
 
