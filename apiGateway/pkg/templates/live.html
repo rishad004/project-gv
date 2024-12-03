@@ -313,20 +313,20 @@
     if (Hls.isSupported()) {
       var video = document.getElementById('video');
       var hls = new Hls();
-      hls.loadSource('http:///35.200.223.115:8888/hls/{{.StreamKey}}.m3u8');
+      hls.loadSource('http:///34.72.47.88:8888/hls/{{.StreamKey}}.m3u8');
       hls.attachMedia(video);
       hls.on(Hls.Events.MANIFEST_PARSED, function() {
         video.play();
       });
     } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      video.src = 'http:///35.200.223.115:8888/hls/{{.StreamKey}}.m3u8';
+      video.src = 'http:///34.72.47.88:8888/hls/{{.StreamKey}}.m3u8';
       video.addEventListener('loadedmetadata', function() {
         video.play();
       });
     }
 
     // WebSocket connection for chat
-    const socket = new WebSocket('ws://34.171.224.184:8080/ws/user/chat?channel={{.Channel}}');
+    const socket = new WebSocket('ws://byecom.shop/ws/user/chat?channel={{.Channel}}');
 
     socket.onopen = function() {
       console.log('Connected to the chat WebSocket');
